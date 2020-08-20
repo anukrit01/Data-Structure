@@ -1,0 +1,79 @@
+# Node Class
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Linked List Class
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insertion as append
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        last_node = self.head
+        while last_node.next:
+            last_node = last_node.next
+        last_node.next = new_node
+
+    # Print the list
+    def print_list(self):
+        curr_node = self.head
+        while curr_node:
+            print(curr_node.data)
+            curr_node = curr_node.next
+
+    # Insertion using prepend
+    def prepend(self, data):
+        new_node = Node(data)
+
+        new_node.next = self.head
+        self.head = new_node
+    
+    # Insertion after a given node
+    def after_node(self, pre_node, data):
+        if not pre_node:
+            print('Previous node does not exist.')
+            return
+        new_node = Node(data)
+        new_node.next = pre_node.next
+        pre_node.next = new_node
+
+    # Counting occurrence of a given data element iteratively
+    def count_occur_iterative(self, data):
+        curr = self.head
+        count = 0
+
+        while curr:
+            if curr.data == data:
+                count += 1
+            curr = curr.next
+        return count
+
+    # Counting occurrence of a given data element recursively
+    def count_occur_recursive(self, node, data):
+        if not node:
+            return 0
+        if node.data == data:
+            return 1 + self.count_occur_recursive(node.next, data)
+        else:
+            return self.count_occur_recursive(node.next, data)
+
+
+# Testing
+newlist = LinkedList()
+newlist.append('A')
+newlist.append('B')
+newlist.append('C')
+newlist.prepend('D')
+newlist.after_node(newlist.head.next, 'E')
+newlist.append('A')
+newlist.append('B')
+
+newlist.print_list()
+print('Number of occurences of A is:', newlist.count_occur_iterative('A'))
+print('number of occurences of B is:', newlist.count_occur_recursive(newlist.head, 'B'))
